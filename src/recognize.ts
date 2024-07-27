@@ -1,9 +1,16 @@
-import { type ImageLike, createScheduler, createWorker } from "tesseract.js";
+import {
+	type ImageLike,
+	OEM,
+	createScheduler,
+	createWorker,
+} from "tesseract.js";
 
 const scheduler = createScheduler();
-createWorker("eng").then((x) => scheduler.addWorker(x));
+createWorker("eng", OEM.TESSERACT_LSTM_COMBINED, {
+	logger: (m) => m.progress === 1 && console.log(m),
+}).then((x) => scheduler.addWorker(x));
 
 export const recognize = async (url: ImageLike) => {
-	const result = await scheduler.addJob("recognize", url);
+	const result = await scheduler.addJob("recognize", url, { rotateAuto: true });
 	return result.data.text;
 };
