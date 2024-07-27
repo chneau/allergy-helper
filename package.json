@@ -1,0 +1,23 @@
+{
+	"scripts": {
+		"start": "farm start",
+		"upgrade": "npm-check-updates --upgrade --install=always --packageManager=bun",
+		"check": "biome check --write --unsafe .",
+		"lint": "tsc --noEmit"
+	},
+	"dependencies": {
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"tesseract.js": "^5.1.0"
+	},
+	"devDependencies": {
+		"@farmfe/cli": "^1.0.3",
+		"@farmfe/core": "^1.3.11",
+		"@farmfe/plugin-react": "^1.2.0",
+		"@types/koa-compress": "^4.0.6",
+		"@types/react": "^18.3.3",
+		"@types/react-dom": "^18.3.0",
+		"koa-compress": "^5.1.1",
+		"react-refresh": "^0.14.2"
+	}
+}
