@@ -1,14 +1,20 @@
 import {
 	type ImageLike,
 	OEM,
+	PSM,
 	createScheduler,
 	createWorker,
 } from "tesseract.js";
 
 const scheduler = createScheduler();
-createWorker("eng", OEM.TESSERACT_LSTM_COMBINED, {
+const workerAdded = createWorker("eng", OEM.DEFAULT, {
 	logger: (m) => m.progress === 1 && console.log(m),
-}).then((x) => scheduler.addWorker(x));
+}).then((x) => {
+	x.setParameters({ tessedit_pageseg_mode: PSM.AUTO });
+	return scheduler.addWorker(x);
+});
 
-export const recognize = async (url: ImageLike) =>
-	await scheduler.addJob("recognize", url, { rotateAuto: true });
+export const recognize = async (url: ImageLike) => {
+	await workerAdded;
+	return await scheduler.addJob("recognize", url, { rotateAuto: true });
+};

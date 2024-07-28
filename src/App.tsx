@@ -12,27 +12,34 @@ export const App = () => {
 				}
 			>
 				Take picture
-				<form onSubmit={() => false} hidden>
+				<form
+					onSubmit={(e) => {
+						e.preventDefault();
+						return false;
+					}}
+					hidden
+				>
 					<input
 						id="loadPicture"
 						type="file"
 						accept="image/*"
 						// @ts-expect-error
 						capture="camera"
-						onChange={(e) => {
+						onChange={async (e) => {
 							const file = e.target.files?.[0];
 							if (!file) return;
 							setText("Loading...");
-							recognize(file)
-								.then((x) => setText(x.data.text))
-								.finally(() => {
-									e.target.value = "";
-								});
+							const result = await recognize(file).finally(() => {
+								e.target.value = "";
+							});
+							setText(
+								`${result.data.text}\n\nconfidence: ${result.data.confidence} - rotateRadians: ${result.data.rotateRadians}`,
+							);
 						}}
 					/>
 				</form>
 			</button>
-			<pre>{text}</pre>
+			<pre style={{ textWrap: "wrap" }}>{text}</pre>
 		</div>
 	);
 };
