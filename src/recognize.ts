@@ -10,7 +10,5 @@ createWorker("eng", OEM.TESSERACT_LSTM_COMBINED, {
 	logger: (m) => m.progress === 1 && console.log(m),
 }).then((x) => scheduler.addWorker(x));
 
-export const recognize = async (url: ImageLike) => {
-	const result = await scheduler.addJob("recognize", url, { rotateAuto: true });
-	return result.data.text;
-};
+export const recognize = async (url: ImageLike) =>
+	await scheduler.addJob("recognize", url, { rotateAuto: true });

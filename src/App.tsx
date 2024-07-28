@@ -24,7 +24,7 @@ export const App = () => {
 							if (!file) return;
 							setText("Loading...");
 							recognize(file)
-								.then((x) => setText(x))
+								.then((x) => setText(x.data.text))
 								.finally(() => {
 									e.target.value = "";
 								});
