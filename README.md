@@ -9,6 +9,7 @@ The user can take a picture of the back of a product and the application will te
 - React
 - Bun
 - tesseract.js
+- farm
 
 ## Dev log
 
